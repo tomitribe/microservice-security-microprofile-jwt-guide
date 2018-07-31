@@ -81,7 +81,7 @@ After that you can go to the browser and open http://localhost:8181/moviefun/log
 
 image::login.png[""]
 
-Let's now go through a scenario in the user side of things to understand how permission works.
+Next step is to go through a scenario in the user side of things to understand how permission works.
 
 == Permission driven by the JSON Web Token
 
