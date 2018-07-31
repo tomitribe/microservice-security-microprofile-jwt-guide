@@ -99,7 +99,7 @@ You will also be able to add a movie clicking on _Add movie_ or to delete a movi
 
 All the operations are possible because the application has a jwt _access token_ token that was granted in the login by the gateway and it can be used to access all the services in the back-end until it expires.
 
-In your browser go to the _Developer Tools (F12)_ to inspect the request and look for the Authorization header. It will have the access token right after the _bearer_ prefix.
+In your browser go to the _Developer Tools (F12)_, refresh the page, then inspect the request and look for the Authorization header. It will have the access token right after the _bearer_ prefix.
 
 image::inspect.png[""]
 
@@ -128,7 +128,7 @@ The first thing we need to configure is the Public Key.
 
 === Configuring the Public Key
 
-The tokens coming from the gateway are signed with a private key and in order to verify if the token is valid in the back-end we need to have the public key configured. The class link:https://github.com/tomitribe/microservice-with-jwt-and-microprofile/blob/8a831afaf223c58cc68e9f40d47d0acac21ea965/src/main/java/org/superbiz/moviefun/rest/MoviesMPJWTConfigurationProvider.java#L41[MoviesMPJWTConfigurationProvider,window="_blank"] has the configuration, it loads the _publicKey.pem_ from the _src/main/resources_ folder, see the code below:
+The tokens coming from the gateway are signed with a private key and in order to verify if the token is valid in the back-end we need to have the public key configured. The class link:https://github.com/tomitribe/microservice-with-jwt-and-microprofile/blob/8a831afaf223c58cc68e9f40d47d0acac21ea965/src/main/java/org/superbiz/moviefun/rest/MoviesMPJWTConfigurationProvider.java#L41[MoviesMPJWTConfigurationProvider,window="_blank"] has the configuration, it loads the publicKey.pem from the src/main/resources folder, see the code below:
 
 ```java
 @Produces
@@ -150,10 +150,10 @@ Optional<JWTAuthContextInfo> getOptionalContextInfo() throws Exception {
 }
 ```
 
-Note that the _ISSUE_BY_ constant is very important as it will check the source of the token and also important to put the type of key you are using, for example _RSA_.
+Note that the _ISSUE_BY_ constant is very important as it will check the source of the token and put the type of key you are using, for example _RSA_.
 
 === Enabling an application to use Microprofile JWT
-Next step is to enable the application to use Microprofile JWT. The class link:https://github.com/tomitribe/microservice-with-jwt-and-microprofile/blob/8a831afaf223c58cc68e9f40d47d0acac21ea965/src/main/java/org/superbiz/moviefun/rest/ApplicationConfig.java#L25[ApplicationConfig,window="_blank"] will show you an example on how you can do that. All you have to do is to add the _@LoginConfig_ annotation with the _authMethod="MP-JWT"_ to the JAX-RS Application class just like the code below:
+Next step is to enable the application to use Microprofile JWT. The class link:https://github.com/tomitribe/microservice-with-jwt-and-microprofile/blob/8a831afaf223c58cc68e9f40d47d0acac21ea965/src/main/java/org/superbiz/moviefun/rest/ApplicationConfig.java#L25[ApplicationConfig,window="_blank"] will show you an example on how you can do that. All you have to do is to add the @LoginConfig annotation with the _authMethod="MP-JWT"_ to the JAX-RS Application class just like the code below:
 
 ```java
 @ApplicationPath("/rest")
@@ -164,7 +164,7 @@ public class ApplicationConfig extends Application {
 ```
 
 === Managing the token inside the application
-Let's now understand how we can manage the token inside the application. Open the link:https://github.com/tomitribe/microservice-with-jwt-and-microprofile/blob/8a831afaf223c58cc68e9f40d47d0acac21ea965/src/main/java/org/superbiz/moviefun/rest/MoviesResource.java[MoviesResource,window="_blank"]. You will find a piece of code to hanle the injection of the JSonWebToken.
+Let's now understand how we can manage the token inside the application. Open the link:https://github.com/tomitribe/microservice-with-jwt-and-microprofile/blob/8a831afaf223c58cc68e9f40d47d0acac21ea965/src/main/java/org/superbiz/moviefun/rest/MoviesResource.java[MoviesResource,window="_blank"]. You will find a piece of code to handle the injection of the JSonWebToken.
 
 ```java
 @Inject
