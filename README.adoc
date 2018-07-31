@@ -7,7 +7,6 @@
 :leveloffset: 1
 
 = Stateless Microservice Security via JWT
-Time: 10 minutes
 
 == Learning objectives
 
@@ -100,7 +99,7 @@ You will also be able to add a movie clicking on _Add movie_ or to delete a movi
 
 All the operations are possible because the application has an access token token that was granted in the login by the gateway and it can be used to access all the services in the back-end until it expires.
 
-In your browser go to the _Developer Tools_ to inspect the request and look for the Authorization header. It will have the access token right after the _bearer_ prefix.
+In your browser go to the _Developer Tools (F12)_ to inspect the request and look for the Authorization header. It will have the access token right after the _bearer_ prefix.
 
 image::inspect.png[""]
 
@@ -123,11 +122,13 @@ image::denied.png[""]
 
 Let's now jump into the code and see how it works in the development side of things.
 
-== Understanding the Microprofile JWT code
+== Understanding the Microprofile JWT back-end code
 
-The first thing we need to configure is the Public Key. The tokens coming from the gateway are signed with a private key and in order to verify if the token is valid in the back-end we need to have the public key configured.
+The first thing we need to configure is the Public Key.
 
-The class link:https://github.com/tomitribe/microservice-with-jwt-and-microprofile/blob/8a831afaf223c58cc68e9f40d47d0acac21ea965/src/main/java/org/superbiz/moviefun/rest/MoviesMPJWTConfigurationProvider.java#L41[MoviesMPJWTConfigurationProvider,window="_blank"] has the configuration, it loads the _publicKey.pem_ from the _src/main/resources_ folder, see the code below:
+=== Configuring the Public Key
+
+The tokens coming from the gateway are signed with a private key and in order to verify if the token is valid in the back-end we need to have the public key configured. The class link:https://github.com/tomitribe/microservice-with-jwt-and-microprofile/blob/8a831afaf223c58cc68e9f40d47d0acac21ea965/src/main/java/org/superbiz/moviefun/rest/MoviesMPJWTConfigurationProvider.java#L41[MoviesMPJWTConfigurationProvider,window="_blank"] has the configuration, it loads the _publicKey.pem_ from the _src/main/resources_ folder, see the code below:
 
 ```java
 @Produces
@@ -151,6 +152,7 @@ Optional<JWTAuthContextInfo> getOptionalContextInfo() throws Exception {
 
 Note that the _ISSUE_BY_ constant is very important as it will check the source of the token and also important to put the type of key you are using, for example _RSA_.
 
+=== Enabling an application to use Microprofile JWT
 Next step is to enable the application to use Microprofile JWT. The class link:https://github.com/tomitribe/microservice-with-jwt-and-microprofile/blob/8a831afaf223c58cc68e9f40d47d0acac21ea965/src/main/java/org/superbiz/moviefun/rest/ApplicationConfig.java#L25[ApplicationConfig,window="_blank"] will show you an example on how you can do that. All you have to do is to add the _@LoginConfig_ annotation with the _authMethod="MP-JWT"_ to the JAX-RS Application class just like the code below:
 
 ```java
@@ -161,6 +163,7 @@ public class ApplicationConfig extends Application {
 }
 ```
 
+=== Managing the token inside the application
 Let's now understand how we can manage the token inside the application. Open the link:https://github.com/tomitribe/microservice-with-jwt-and-microprofile/blob/8a831afaf223c58cc68e9f40d47d0acac21ea965/src/main/java/org/superbiz/moviefun/rest/MoviesResource.java[MoviesResource,window="_blank"]. You will find a piece of code to hanle the injection of the JSonWebToken.
 
 ```java
@@ -265,6 +268,8 @@ private ClaimValue<String> jti;
 
 ```
 
+=== Authorization Check
+
 In the MoviesResource you will also find the JAX-RS class link:https://github.com/jax-rs/api/blob/92f9326eb8694e81ffb71861bc95ed25fa4c66a0/jaxrs-api/src/main/java/javax/ws/rs/core/SecurityContext.java[SecurityContext,window="_blank"]. You can inject the class like this:
 ```java
 @Context
@@ -300,8 +305,8 @@ public Movie editMovie(
    return movie;
 }
 ```
-
-Now that we learned the basics, let's try to extend it a little more and do some refactoring to improve them. For injecting the claim username, for example, you added it using ClaimValue<String> directly in the MoviesResource. ClaimValue was required because the MoviesResource is _@ApplicationScoped_ and in order be able to inject the value in the application scope, the implementation requires it to use ClaimValue.
+=== Going fancy with Custom Claims
+Now that we learned the basics, let's go fancy and extend it a little more and do some refactoring to improve them. For injecting the claim username, for example, you added it using ClaimValue<String> directly in the MoviesResource. ClaimValue was required because the MoviesResource is _@ApplicationScoped_ and in order be able to inject the value in the application scope, the implementation requires it to use ClaimValue.
 
 But there is another way we could solve this problem. Let's create a _@RequestScoped_ class called Person and have all the fields injected directly using String without the ClaimValue class.
 
@@ -381,6 +386,8 @@ The claims come from an account configured in the gateway or from an external mi
 ```
 
 The claim to be in the JWT needs to be configured as a Claim in the previous page.
+
+=== Using CDI Produces to decrypt a claim
 
 As you can see in the previous payload and in the JWT from alex, the creditCard is encrypted. This is a good practice, as anyone really can decode a base 64 encoded JWT, and you don't want this information exposed in the network. If you want you can decrypt it and have it injected in your Person class. See the link:https://github.com/tomitribe/microservice-with-jwt-and-microprofile/blob/97d10e1d85af7337b18f223ffaeae37ef144a4d5/src/main/java/org/superbiz/moviefun/utils/CipherProduces.java#L29-L29[CipherProduces,window="_blank"] class below:
 
