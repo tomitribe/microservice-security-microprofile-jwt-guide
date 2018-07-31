@@ -97,7 +97,7 @@ Change a field like _Title_ and Save. You will see that user _alex_ has the perm
 
 You will also be able to add a movie clicking on _Add movie_ or to delete a movie in the ellipses button as well.
 
-All the operations are possible because the application has an access token token that was granted in the login by the gateway and it can be used to access all the services in the back-end until it expires.
+All the operations are possible because the application has a jwt _access token_ token that was granted in the login by the gateway and it can be used to access all the services in the back-end until it expires.
 
 In your browser go to the _Developer Tools (F12)_ to inspect the request and look for the Authorization header. It will have the access token right after the _bearer_ prefix.
 
