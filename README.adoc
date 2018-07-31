@@ -64,7 +64,7 @@ Let's execute a script to load the initial OAuth2 configuration and also all the
 
 == Start Apache TomEE with the Movie application
 
-Let's now start TomEE so our app is up and running. In the project root folder execute:
+Now start TomEE so our app is up and running. In the project root folder execute:
 
 ```bash
 mvn clean install -DskipTests tomee:run
