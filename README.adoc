@@ -367,7 +367,7 @@ After that all you have to do is to inject in the MoviesResource and use it.
 private Person person;
 ```
 
-If you wonder how the claims are being configured in the gateway you can login into TAG link:http://localhost:8080/tag/dashboard[,window="_blank"] using username _admin_ and password _admin_.
+If you wonder how the claims are being configured in the gateway you can login into TAG link:http://localhost:8080/tag/dashboard[,window="_blank"] using username *admin* and password *admin*.
 
 image::tag.png[""]
 
@@ -385,7 +385,7 @@ The claims come from an account configured in the gateway or from an external mi
 }
 ```
 
-The claim to be in the JWT needs to be configured as a Claim in the previous page.
+The claim to be in the JWT, it needs to be configured as a Claim in the previous page.
 
 === Using CDI Produces to decrypt a claim
 
