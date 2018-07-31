@@ -389,7 +389,7 @@ The claim to be in the JWT needs to be configured as a Claim in the previous pag
 
 === Using CDI Produces to decrypt a claim
 
-As you can see in the previous payload and in the JWT from alex, the creditCard is encrypted. This is a good practice, as anyone really can decode a base 64 encoded JWT, and you don't want this information exposed in the network. If you want you can decrypt it and have it injected in your Person class. See the link:https://github.com/tomitribe/microservice-with-jwt-and-microprofile/blob/97d10e1d85af7337b18f223ffaeae37ef144a4d5/src/main/java/org/superbiz/moviefun/utils/CipherProduces.java#L29-L29[CipherProduces,window="_blank"] class below:
+As you can see in the previous payload and in the JWT from alex, the _creditCard_ is encrypted. This is a good practice, as anyone really can decode a base 64 encoded JWT, and you don't want this information exposed in the network. If you want you can decrypt it and have it injected in your Person class. See the link:https://github.com/tomitribe/microservice-with-jwt-and-microprofile/blob/97d10e1d85af7337b18f223ffaeae37ef144a4d5/src/main/java/org/superbiz/moviefun/utils/CipherProduces.java#L29-L29[CipherProduces,window="_blank"] class below:
 
 ```java
 @RequestScoped
