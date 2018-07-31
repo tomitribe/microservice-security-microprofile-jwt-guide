@@ -404,7 +404,7 @@ public class CipherProduces {
 }
 ```
 
-You will see a CDI _@Produces_ method that will let you produce a decrypted value of an encrypted string. It will get the claim name from the _@DecryptedValue_ annotation, check if the claim exists in the JsonWebToken, decrypt the claim using the TomEE cipher and return it to be injected. This is the way it should be injected in the Person class.
+You will see a CDI _@Produces_ method that will let you produce a decrypted value of an encrypted string. It will get the claim name from the _@DecryptedValue_ annotation, check if the claim exists in the _JsonWebToken_, decrypt the claim using the TomEE cipher and return it to be injected. This is the way it should be injected in the Person class.
 
 ```java
 @Inject
