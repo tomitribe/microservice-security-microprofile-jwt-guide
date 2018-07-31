@@ -22,7 +22,7 @@ The demo will show you how to use the features Microprofile JWT specification im
 
 == Deployment Diagram
 
-The diagram below shows the clients on the left side, in the middle the Tribestream API Gateway (TAG) as the authorization server, running on docker and on the right, a movie application built using AngularJS for the front-end and JAX-RS for the back-end.
+The diagram below shows the clients on the left side, in the middle the Tribestream API Gateway (TAG) as the authorization server running on docker and on the right, a movie application built using AngularJS for the front-end and JAX-RS for the back-end.
 
 image::deployment_diagram.png[""]
 
