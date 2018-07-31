@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+documentation:
+
+  - doc_root: 'README.adoc'
+    name: 'Examples'
+    display_name: 'Stateless Microservice Security via JWT Guide'
+    public_path: 'en/api-gateway/microservice-security-microprofile-jwt'
+    single_page: 'true'
